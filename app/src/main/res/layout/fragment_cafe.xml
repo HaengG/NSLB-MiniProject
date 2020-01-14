@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/layout_cafe"
-    tools:context=".ui.main.Cafe">
+    tools:context=".Google_Map.MapMain">
 
     <LinearLayout
         android:layout_width="match_parent"

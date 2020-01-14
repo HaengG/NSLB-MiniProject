@@ -31,6 +31,11 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (FirebaseAuth.getInstance().getCurrentUser()==null){
+            startActivity(new Intent(this, SignInActivity.class));
+            finish();
+        }
+
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this , getSupportFragmentManager());
 
         ViewPager viewPager = findViewById(R.id.view_pager);
@@ -41,7 +46,6 @@ public class MainActivity extends BaseActivity {
         {
             tabs.getTabAt(i).setIcon(tabIcons[i]);
         }
-
     }
 
     @Override

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.NSLB.project.Google_Map.MapMain;
 import com.NSLB.project.board.RecentBoardFragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
@@ -15,7 +16,7 @@ import com.google.firebase.database.Query;
  * one of the sections/tabs/pages.
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
-    public Cafe mCafe = null;
+    public MapMain mMapMain = null;
     public User mUser=null;
     public Board mBoard=null;
 
@@ -29,7 +30,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch(position) {
             case 0:
-                return mCafe = new Cafe();
+                return mMapMain = new MapMain();
             case 1:
                 return mBoard= new RecentBoardFragment() ;
                             case 2:

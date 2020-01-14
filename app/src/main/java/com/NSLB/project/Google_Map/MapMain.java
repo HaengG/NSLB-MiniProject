@@ -1,50 +1,38 @@
-package com.NSLB.project.ui.main;
+package com.NSLB.project.Google_Map;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.core.app.ActivityCompat;
-
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.NSLB.project.MainActivity;
-import com.NSLB.project.R;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
+import com.NSLB.project.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -59,46 +47,33 @@ import java.util.Locale;
 import noman.googleplaces.NRPlaces;
 import noman.googleplaces.Place;
 import noman.googleplaces.PlaceType;
-import noman.googleplaces.PlacesListener;
 import noman.googleplaces.PlacesException;
+import noman.googleplaces.PlacesListener;
 
 import static android.content.Context.LOCATION_SERVICE;
 
 
-public class Cafe extends Fragment implements View.OnClickListener, OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback, PlacesListener{
-    private Button cafe_time;
+public class MapMain extends Fragment implements View.OnClickListener, OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback, PlacesListener{
+
+
+
     public GoogleMap mMap;
-    private Marker currentMarker = null;
     private ImageButton MartBtn, CafeBtn, HospitalBtn, ParkBtn;
-
     private static final String TAG = "googlemap_example";
-    private static final int GPS_ENABLE_REQUEST_CODE = 2001;
-    private static final int UPDATE_INTERVAL_MS = 1000;  // 1초
-    private static final int FASTEST_UPDATE_INTERVAL_MS = 500; // 0.5초
+    private FusedLocationProviderClient mFusedLocationClient;
+    private LocationRequest locationRequest;
+    private Location location;
+    private View mLayout;  // Snackbar 사용하기 위해서는 View가 필요합니다.
+    List<Marker> previous_marker = null;
 
-
-    // onRequestPermissionsResult에서 수신된 결과에서 ActivityCompat.requestPermissions를 사용한 퍼미션 요청을 구별하기 위해 사용됩니다.
-    private static final int PERMISSIONS_REQUEST_CODE = 100;
-    boolean needRequest = false;
-
-
-    // 앱을 실행하기 위해 필요한 퍼미션을 정의합니다.
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};  // 외부 저장소
-
+    boolean needRequest = false;
+    Map_Permission MapP = new Map_Permission();
 
     Location mCurrentLocatiion;
     LatLng currentPosition;
 
 
-    private FusedLocationProviderClient mFusedLocationClient;
-    private LocationRequest locationRequest;
-    private Location location;
-
-
-    private View mLayout;  // Snackbar 사용하기 위해서는 View가 필요합니다.
-    // (참고로 Toast에서는 Context가 필요했습니다.)
-
-    List<Marker> previous_marker = null;
 
 
     @Override
@@ -107,10 +82,7 @@ public class Cafe extends Fragment implements View.OnClickListener, OnMapReadyCa
 
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        //getActivity().setContentView(R.layout.activity_main);
-
         previous_marker = new ArrayList<Marker>();
-        //initButton();
 
         mLayout = view.findViewById(R.id.layout_cafe);
         MartBtn =(ImageButton)view.findViewById(R.id.mart);
@@ -125,8 +97,8 @@ public class Cafe extends Fragment implements View.OnClickListener, OnMapReadyCa
 
         locationRequest = new LocationRequest()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(UPDATE_INTERVAL_MS)
-                .setFastestInterval(FASTEST_UPDATE_INTERVAL_MS);
+                .setInterval(Map_APIValue.VALUE.UPDATE_INTERVAL_MS)
+                .setFastestInterval(Map_APIValue.VALUE.FASTEST_UPDATE_INTERVAL_MS);
 
         LocationSettingsRequest.Builder builder =
                 new LocationSettingsRequest.Builder();
@@ -137,29 +109,18 @@ public class Cafe extends Fragment implements View.OnClickListener, OnMapReadyCa
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
 
-        /*SupportMapFragment mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager()
-                .findFragmentById(R.id.map);*/
+
         SupportMapFragment mapFragment1 = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment1.getMapAsync(this);
 
         return view;
     }
 
-    /*private void initButton()
-    {
-        MartBtn =(Button)getActivity().findViewById(R.id.mart);
-        CafeBtn =(Button)getActivity().findViewById(R.id.cafe);
-        HospitalBtn =(Button)getActivity().findViewById(R.id.hospital);
-        ParkBtn =(Button)getActivity().findViewById(R.id.park);
-
-        MartBtn.setOnClickListener(this);
-        CafeBtn.setOnClickListener(this);
-        HospitalBtn.setOnClickListener(this);
-        ParkBtn.setOnClickListener(this);
-    }*/
 
     @Override
     public void onClick(View v) {
+        Map_Walk MapW = new Map_Walk();
+
         switch (v.getId()){
             case R.id.mart:
                 showPlaceInformation_mart(currentPosition);
@@ -171,7 +132,7 @@ public class Cafe extends Fragment implements View.OnClickListener, OnMapReadyCa
                 showPlaceInformation_hospital(currentPosition);
                 break;
             case R.id.park:
-                showPlace_pet();
+                MapW.showPlace_pet(mMap);
             default:
                 break;
         }
@@ -185,7 +146,7 @@ public class Cafe extends Fragment implements View.OnClickListener, OnMapReadyCa
 
         //런타임 퍼미션 요청 대화상자나 GPS 활성 요청 대화상자 보이기전에
         //지도의 초기위치를 서울로 이동
-        setDefaultLocation();
+        MapP.setDefaultLocation(mMap);
 
 
 
@@ -222,7 +183,7 @@ public class Cafe extends Fragment implements View.OnClickListener, OnMapReadyCa
 
                         // 3-3. 사용자게에 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult에서 수신됩니다.
                         ActivityCompat.requestPermissions( getActivity(), REQUIRED_PERMISSIONS,
-                                PERMISSIONS_REQUEST_CODE);
+                                Map_APIValue.VALUE.PERMISSIONS_REQUEST_CODE);
                     }
                 }).show();
 
@@ -231,11 +192,10 @@ public class Cafe extends Fragment implements View.OnClickListener, OnMapReadyCa
                 // 4-1. 사용자가 퍼미션 거부를 한 적이 없는 경우에는 퍼미션 요청을 바로 합니다.
                 // 요청 결과는 onRequestPermissionResult에서 수신됩니다.
                 ActivityCompat.requestPermissions( getActivity(), REQUIRED_PERMISSIONS,
-                        PERMISSIONS_REQUEST_CODE);
+                        Map_APIValue.VALUE.PERMISSIONS_REQUEST_CODE);
             }
 
         }
-
 
 
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
@@ -272,8 +232,9 @@ public class Cafe extends Fragment implements View.OnClickListener, OnMapReadyCa
                 Log.d(TAG, "onLocationResult : " + markerSnippet);
 
 
+                Map_Permission MapP = new Map_Permission();
                 //현재 위치에 마커 생성하고 이동
-                setCurrentLocation(location, markerTitle, markerSnippet);
+                MapP.setCurrentLocation(mMap, location, markerTitle, markerSnippet);
 
                 mCurrentLocatiion = location;
             }
@@ -283,12 +244,15 @@ public class Cafe extends Fragment implements View.OnClickListener, OnMapReadyCa
 
     };
 
+
+
     private void startLocationUpdates() {
 
+        Map_GPS mGPS = new Map_GPS();
         if (!checkLocationServicesStatus()) {
 
             Log.d(TAG, "startLocationUpdates : call showDialogForLocationServiceSetting");
-            showDialogForLocationServiceSetting();
+            mGPS.showDialogForLocationServiceSetting();
         }else {
 
             int hasFineLocationPermission = ContextCompat.checkSelfPermission(getContext(),
@@ -379,56 +343,18 @@ public class Cafe extends Fragment implements View.OnClickListener, OnMapReadyCa
             return address.getAddressLine(0).toString();
         }
     }
+
+
     public boolean checkLocationServicesStatus() {
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
 
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
-    public void setCurrentLocation(Location location, String markerTitle, String markerSnippet) {
 
 
-        if (currentMarker != null) currentMarker.remove();
 
 
-        LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-
-        MarkerOptions markerOptions = new MarkerOptions(); //마커 만드는 과정
-        markerOptions.position(currentLatLng);
-        markerOptions.title(markerTitle);
-        markerOptions.snippet(markerSnippet);
-        markerOptions.draggable(true);
-
-
-        currentMarker = mMap.addMarker(markerOptions); // 마커 생성
-
-        //CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
-        //mMap.moveCamera(cameraUpdate);
-
-    }
-    public void setDefaultLocation() {
-
-
-        //디폴트 위치, Seoul
-        LatLng DEFAULT_LOCATION = new LatLng(37.56, 126.97);
-        String markerTitle = "위치정보 가져올 수 없음";
-        String markerSnippet = "위치 퍼미션과 GPS 활성 요부 확인하세요";
-
-
-        if (currentMarker != null) currentMarker.remove();
-
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(DEFAULT_LOCATION);
-        markerOptions.title(markerTitle);
-        markerOptions.snippet(markerSnippet);
-        markerOptions.draggable(true);
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-        currentMarker = mMap.addMarker(markerOptions);
-
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 15);
-        mMap.moveCamera(cameraUpdate);
-
-    }
     private boolean checkPermission() {
 
         int hasFineLocationPermission = ContextCompat.checkSelfPermission(getContext(),
@@ -446,12 +372,13 @@ public class Cafe extends Fragment implements View.OnClickListener, OnMapReadyCa
         return false;
 
     }
+
     @Override
     public void onRequestPermissionsResult(int permsRequestCode,
                                            @NonNull String[] permissions,
                                            @NonNull int[] grandResults) {
 
-        if ( permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length) {
+        if ( permsRequestCode == Map_APIValue.VALUE.PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length) {
 
             // 요청 코드가 PERMISSIONS_REQUEST_CODE 이고, 요청한 퍼미션 개수만큼 수신되었다면
 
@@ -509,36 +436,16 @@ public class Cafe extends Fragment implements View.OnClickListener, OnMapReadyCa
 
         }
     }
-    private void showDialogForLocationServiceSetting() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("위치 서비스 비활성화");
-        builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n"
-                + "위치 설정을 수정하실래요?");
-        builder.setCancelable(true);
-        builder.setPositiveButton("설정", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                Intent callGPSSettingIntent
-                        = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivityForResult(callGPSSettingIntent, GPS_ENABLE_REQUEST_CODE);
-            }
-        });
-        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-            }
-        });
-        builder.create().show();
-    }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
 
-            case GPS_ENABLE_REQUEST_CODE:
+            case Map_APIValue.VALUE.GPS_ENABLE_REQUEST_CODE:
 
                 //사용자가 GPS 활성 시켰는지 검사
                 if (checkLocationServicesStatus()) {
@@ -572,7 +479,7 @@ public class Cafe extends Fragment implements View.OnClickListener, OnMapReadyCa
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                for (noman.googleplaces.Place place : places) {
+                for (Place place : places) {
 
                     LatLng latLng
                             = new LatLng(place.getLatitude()
@@ -607,50 +514,29 @@ public class Cafe extends Fragment implements View.OnClickListener, OnMapReadyCa
             previous_marker.clear();//지역정보 마커 클리어
 
         new NRPlaces.Builder()
-                //.listener()
-                .key("AIzaSyBKejx7G5oBN0LeHFmHg1GtN9LWRsgHuFY") //key value
+                .listener(this)
+                .key(Map_APIValue.VALUE._API_VALUE) //key value
                 .latlng(location.latitude, location.longitude)//현재 위치
                 .radius(50000) //5000 미터 내에서 검색
                 .type(PlaceType.PET_STORE)
                 .build()
                 .execute();
     }
-    public double PetPark_Latitude[]= {36.138528, 36.140108, 36.142352, 36.140077, 36.145223};
-    public double PetPark_Longtitude[]= {128.411402, 128.414855, 128.431644, 128.432550, 128.416205};
 
-    public void showPlace_pet()
-    {
-//        double mLatitude = 36.138528;
-//        double mLongitude = 128.411402;
-        for(int i=0; i<5; i++)
-        {
 
-            LatLng mPostion = new LatLng(PetPark_Latitude[i],PetPark_Longtitude[i]);
-            MarkerOptions mMarker = new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.defaultMarker(200f))
-                    .title("17 : 00 ~ 22 : 00")
-                    .snippet("입장 가능 시간")
-                    .alpha(0.5f)
-                    .position(mPostion);
 
-            CircleOptions cCircle = new CircleOptions().center(mPostion)
-                    .radius(100)
-                    .strokeWidth(0f)
-                    .fillColor(Color.parseColor("#880000ff"));
-            this.mMap.addMarker(mMarker);
-            this.mMap.addCircle(cCircle);
-        }
-    }
     public void showPlaceInformation_cafe(LatLng location)
     {
+
         mMap.clear();//지도 클리어
 
         if (previous_marker != null)
             previous_marker.clear();//지역정보 마커 클리어
 
+
         new NRPlaces.Builder()
                 .listener(this)
-                .key("AIzaSyBKejx7G5oBN0LeHFmHg1GtN9LWRsgHuFY")
+                .key(Map_APIValue.VALUE._API_VALUE)
                 .latlng(location.latitude, location.longitude)//현재 위치
                 .radius(50000) //500 미터 내에서 검색
                 .type(PlaceType.CAFE)
@@ -658,6 +544,7 @@ public class Cafe extends Fragment implements View.OnClickListener, OnMapReadyCa
                 .execute();
 
     }
+
     public void showPlaceInformation_hospital(LatLng location)
     {
         mMap.clear();//지도 클리어
@@ -667,7 +554,7 @@ public class Cafe extends Fragment implements View.OnClickListener, OnMapReadyCa
 
         new NRPlaces.Builder()
                 .listener(this)
-                .key("AIzaSyBKejx7G5oBN0LeHFmHg1GtN9LWRsgHuFY")
+                .key(Map_APIValue.VALUE._API_VALUE)
                 .latlng(location.latitude, location.longitude)//현재 위치
                 .radius(50000) //500 미터 내에서 검색
                 .type(PlaceType.HOSPITAL)
@@ -679,4 +566,5 @@ public class Cafe extends Fragment implements View.OnClickListener, OnMapReadyCa
     public void onPlacesFinished() {
 
     }
+
 }

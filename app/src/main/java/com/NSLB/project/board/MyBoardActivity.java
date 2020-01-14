@@ -1,15 +1,10 @@
-package com.NSLB.project.ui.main;
+package com.NSLB.project.board;
 
+import com.NSLB.project.ui.main.BoardAppcompat;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
-public class UserReview extends BoardAppcompat {
-
-  /*  @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_review);
-    }*/
+public class MyBoardActivity extends BoardAppcompat {
 
     @Override
     public Query getQuery(DatabaseReference databaseReference) {

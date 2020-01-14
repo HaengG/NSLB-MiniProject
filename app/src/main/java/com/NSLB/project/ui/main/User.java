@@ -13,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.NSLB.project.R;
+import com.NSLB.project.board.MyBoardActivity;
+import com.NSLB.project.board.TopBoardActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -34,7 +36,7 @@ public class User extends Fragment implements View.OnClickListener {
         user_id=(TextView)view.findViewById(R.id.user_id);
         mAuth= FirebaseAuth.getInstance();
         final FirebaseUser user=mAuth.getCurrentUser();
-        //user_id.setText(user.getEmail());
+        user_id.setText(user.getEmail());
         return view;
     }
     @Override
@@ -45,11 +47,11 @@ public class User extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.user_comment:
-                Intent intent1=new Intent(getActivity(),UserComment.class);
+                Intent intent1=new Intent(getActivity(), TopBoardActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.user_review:
-                Intent intent2=new Intent(getActivity(),UserReview.class);
+                Intent intent2=new Intent(getActivity(), MyBoardActivity.class);
                 startActivity(intent2);
                 break;
             default:

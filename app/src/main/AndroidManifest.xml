@@ -30,10 +30,13 @@
             android:label="Login"/>
         <activity android:name=".board.NewPostActivity" />
         <activity
-            android:name=".ui.main.UserReview" />
+            android:name=".board.MyBoardActivity"
+            android:label="내가 쓴 게시글"/>
+
+
         <activity
-            android:name=".ui.main.UserComment"
-            android:label="나의 댓글" />
+            android:name=".board.TopBoardActivity"
+            android:label="인기 게시물" />
         <activity
             android:name=".ui.main.SetUp"
             android:label="설정" />

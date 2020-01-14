@@ -158,8 +158,6 @@ public abstract class Board extends Fragment{
         });
     }
 
-
-
     @Override
     public void onStart() {
         super.onStart();
@@ -176,38 +174,6 @@ public abstract class Board extends Fragment{
         }
     }
 
-    /*private void initDatabase() {
-        adapter = new BoardAdapter();
-        myRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                BoardDTO boardDTO = dataSnapshot.getValue(BoardDTO.class);
-                boardDTOS.add(boardDTO);
-                adapter.addItem(boardDTO);
-                listView.setAdapter(adapter);
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }*/
 
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();

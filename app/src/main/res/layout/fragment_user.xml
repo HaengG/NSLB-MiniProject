@@ -100,7 +100,7 @@
         android:id="@+id/user_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="나의 댓글 보기"
+        android:text="인기 게시물"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="5dp"
