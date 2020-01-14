@@ -1,4 +1,4 @@
-package com.NSLB.project.board;
+package com.NSLB.project.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.NSLB.project.R;
+import com.NSLB.project.board.BoardDetailActivity;
+import com.NSLB.project.board.BoardItem;
+import com.NSLB.project.board.BoardViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,8 +26,8 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
 
-public abstract class MyBoardActivity extends AppCompatActivity {
-    private static final String TAG = "MyBoardActivity";
+public abstract class BoardAppcompat extends AppCompatActivity {
+    private static final String TAG = "BoardAppcompat";
 
     private FirebaseRecyclerAdapter<BoardItem, BoardViewHolder> mAdapter;
     private LinearLayoutManager mManager;
@@ -34,7 +37,7 @@ public abstract class MyBoardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_all_boards);
+        setContentView(R.layout.activity_myboard);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
