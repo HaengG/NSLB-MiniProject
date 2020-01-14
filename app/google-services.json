@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "483037602228",
+    "firebase_url": "https://nslb-project-7165d.firebaseio.com",
+    "project_id": "nslb-project-7165d",
+    "storage_bucket": "nslb-project-7165d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:483037602228:android:fc6732441a5490373f92e1",
+        "android_client_info": {
+          "package_name": "com.NSLB.project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "483037602228-vgvq3ou67oq89nrtfvod0q4rpga3n719.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.NSLB.project",
+            "certificate_hash": "698942e7389aa6fdbbf0e59523b514aaf1c28b25"
+          }
+        },
+        {
+          "client_id": "483037602228-g28ju4utp2s2ocbugheg3jba8e2mujgq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFYUe8RGbUVDztnB2Cv0VWfMhHVfFilQI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "483037602228-g28ju4utp2s2ocbugheg3jba8e2mujgq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/layout_cafe"
+    tools:context=".ui.main.Cafe">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_weight="0.3"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/mart"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_store_black_24dp"
+            android:background="#00FF0000"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:id="@+id/cafe"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_free_breakfast_black_24dp"
+            android:background="#00FF0000"
+            android:layout_weight="1"
+            />
+        <ImageButton
+            android:id="@+id/hospital"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_local_hospital_black_24dp"
+            android:background="#00FF0000"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:id="@+id/park"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_nature_people_black_24dp"
+            android:background="#00FF0000"
+            android:layout_weight="1"
+            />
+
+
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_weight="9.7"
+        android:layout_height="0dp"
+        tools:context=".MapsActivity"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+
+
+
+</LinearLayout>

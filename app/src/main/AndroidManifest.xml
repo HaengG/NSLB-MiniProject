@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.NSLB.project"
+    android:versionCode="1"
+    android:versionName="1.0.1">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <uses-library android:name="org.apache.http.legacy"
+            android:required="false"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBKejx7G5oBN0LeHFmHg1GtN9LWRsgHuFY"/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
+        <activity android:name=".ui.main.Set.Version"
+            android:label="Version"></activity>
+        <activity android:name=".board.BoardDetailActivity" />
+        <activity android:name=".board.BoardComment" />
+        <activity android:name=".SignInActivity" />
+        <activity android:name=".board.NewPostActivity" />
+        <activity
+            android:name=".ui.main.Imformation"
+            android:label="Imformation" />
+        <activity
+            android:name=".ui.main.UserReview" />
+        <activity
+            android:name=".ui.main.UserComment"
+            android:label="나의 댓글" />
+        <activity
+            android:name=".ui.main.SetUp"
+            android:label="설정" />
+        <activity
+            android:name=".ui.main.Post"
+            android:label="작성하기" />
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
