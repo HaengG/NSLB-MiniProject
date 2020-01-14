@@ -26,12 +26,9 @@
         <activity android:name=".ui.main.Set.Version"
             android:label="Version"></activity>
         <activity android:name=".board.BoardDetailActivity" />
-        <activity android:name=".board.BoardComment" />
-        <activity android:name=".SignInActivity" />
+        <activity android:name=".SignInActivity"
+            android:label="Login"/>
         <activity android:name=".board.NewPostActivity" />
-        <activity
-            android:name=".ui.main.Imformation"
-            android:label="Imformation" />
         <activity
             android:name=".ui.main.UserReview" />
         <activity
@@ -40,9 +37,6 @@
         <activity
             android:name=".ui.main.SetUp"
             android:label="설정" />
-        <activity
-            android:name=".ui.main.Post"
-            android:label="작성하기" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme">

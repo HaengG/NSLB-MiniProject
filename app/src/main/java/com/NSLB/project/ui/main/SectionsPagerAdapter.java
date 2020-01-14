@@ -31,9 +31,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return mCafe = new Cafe();
             case 1:
-                return mUser=new User();
-            case 2:
                 return mBoard= new RecentBoardFragment() ;
+                            case 2:
+                return mUser=new User();
             default:
                 return null;
         }

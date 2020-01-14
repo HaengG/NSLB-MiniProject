@@ -21,9 +21,9 @@ public class MainActivity extends BaseActivity {
     private static final Boolean CHECK_IF_VERIFIED = false;
     private int[] tabIcons={
             R.drawable.ic_pets_black_24dp,
-            R.drawable.ic_person_black_24dp,
-            R.drawable.ic_message_black_24dp
-    };
+            R.drawable.ic_message_black_24dp,
+            R.drawable.ic_person_black_24dp
+            };
     private Context mContext = MainActivity.this;
 
     @Override

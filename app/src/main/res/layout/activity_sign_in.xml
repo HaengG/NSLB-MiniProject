@@ -34,56 +34,94 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/icon"
         android:layout_centerHorizontal="true"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/fieldEmail"
-            android:layout_width="150dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:gravity="center_horizontal"
+            android:gravity="left"
             android:hint="email"
             android:inputType="textEmailAddress"
             android:maxLines="1" />
 
         <EditText
             android:id="@+id/fieldPassword"
-            android:layout_width="150dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:gravity="center_horizontal"
+            android:gravity="left"
             android:hint="password"
             android:inputType="textPassword"
             android:maxLines="1" />
-
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/layoutButtons"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layoutEmailPassword"
         android:layout_centerHorizontal="true"
-        android:orientation="horizontal">
-
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
         <Button
             android:id="@+id/buttonSignIn"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_width="150dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="로그인" />
-
-
-        <Button
-            android:id="@+id/buttonSignUp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_width="150dp"
+            android:layout_gravity="center"
+            android:text="로그인"
+            android:background="@drawable/btn_1"/>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="회원가입" />
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+            <View
+                android:id="@+id/view_2"
+                android:background="#E1E1E2"
+                android:layout_width="160dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_height="1dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:text="또는"/>
+            <View
+                android:id="@+id/view_1"
+                android:background="#E1E1E2"
+                android:layout_width="160dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_height="1dp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="계정이 없으신가요?"
+                android:textColor="#999999"/>
+            <Button
+                android:id="@+id/buttonSignUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="가입하기"
+                android:textColor="#1B33AF"
+                android:layout_gravity="center"
+                android:background="#00FF0000"/>
 
+        </LinearLayout>
     </LinearLayout>
-
-
 </RelativeLayout>
